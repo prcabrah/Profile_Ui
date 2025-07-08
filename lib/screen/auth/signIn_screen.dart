@@ -1,7 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:profile_ui/screen/auth/signUp_screen.dart';
+import 'package:profile_ui/screen/auth/signup_screen.dart';
 import 'package:profile_ui/screen/dashboard/dashboard.dart';
 // import 'package:profile_ui/main.dart';
 
