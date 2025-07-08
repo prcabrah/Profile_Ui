@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:profile_ui/screen/auth/signUp_screen.dart';
 import 'package:profile_ui/screen/dashboard/dashboard.dart';
 // import 'package:profile_ui/main.dart';
 
@@ -44,7 +45,7 @@ class LoginScreen extends StatelessWidget {
                     border: OutlineInputBorder(),
                     hintText: "@domain.com",
                   ),
-                  validator: (value) => value != null && value.contains('@')
+                  validator: (value) => value!.isEmpty || !value.contains('@')
                       ? 'Email not correct'
                       : null,
                 ),
@@ -84,6 +85,30 @@ class LoginScreen extends StatelessWidget {
                       style: TextStyle(fontSize: 16, color: Colors.grey),
                     ),
                   ),
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Dont't have an account ? "),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignupScreen(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Register Now',
+                        style: TextStyle(
+                          color: Color(0xFF6B61FF),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 20),
                 Row(

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:profile_ui/main.dart';
 import 'package:profile_ui/screen/auth/signIn_screen.dart';
+import 'package:profile_ui/screen/dashboard/dashboard.dart';
 // import 'package:profile_ui/main.dart';
 // import 'package:profile_ui/screen/auth/signIn_screen.dart';
 
 class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
+  SignupScreen({super.key});
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class SignupScreen extends StatelessWidget {
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 24),
           child: Form(
-            key: GlobalKey<FormState>(),
+            key: _formKey,
             child: Column(
               // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -77,8 +79,9 @@ class SignupScreen extends StatelessWidget {
                     border: OutlineInputBorder(),
                     hintText: 'Enter your email address',
                   ),
-                  validator: (value) =>
-                      value!.contains("@") ? "Enter valid email" : null,
+                  validator: (value) => value!.isEmpty || !value.contains('@')
+                      ? "Enter valid email"
+                      : null,
                 ),
                 SizedBox(height: 16),
                 TextFormField(
@@ -93,15 +96,23 @@ class SignupScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 24),
                 SizedBox(
-                  width: double.infinity,
+                  width: MediaQuery.of(context).size.width,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      final res = _formKey.currentState?.validate();
+                      if (res == true) {
+                        Navigator.of(
+                          context,
+                        ).push(MaterialPageRoute(builder: (_) => Dashboard()));
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
+                      elevation: 0,
                     ),
                     child: Text(
                       "Create Account",
