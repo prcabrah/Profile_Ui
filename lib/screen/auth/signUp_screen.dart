@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:profile_ui/main.dart';
+// import 'package:profile_ui/main.dart';
 import 'package:profile_ui/screen/auth/signIn_screen.dart';
 import 'package:profile_ui/screen/dashboard/dashboard.dart';
 // import 'package:profile_ui/main.dart';
