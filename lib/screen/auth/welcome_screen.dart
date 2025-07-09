@@ -1,38 +1,3 @@
-// import 'package:flutter/material.dart';
-
-// class WelcomeScreen extends StatefulWidget {
-//   const WelcomeScreen({super.key});
-
-//   @override
-//   State<WelcomeScreen> createState() => _WelcomeScreenState();
-// }
-
-// class _WelcomeScreenState extends State<WelcomeScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       // backgroundColor: Colors.white,
-//       body: Stack(
-//         fit: StackFit.expand,
-//         children: [
-//           Image.asset('assets/image/background.jpg', fit: BoxFit.cover),
-//           Center(
-//             child: Text(
-//               'Leafboard',
-//               style: TextStyle(
-//                 fontSize: 24,
-//                 fontWeight: FontWeight.bold,
-//                 fontFamily: 'Product Sans',
-//               ),
-//               // "A platform built for a new way of working"
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 // import 'package:profile_ui/main.dart';
 import 'package:profile_ui/screen/auth/signup_screen.dart';
