@@ -1,23 +1,27 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
-import 'package:profile_ui/screen/auth/signup_screen.dart';
-import 'package:profile_ui/screen/dashboard/dashboard.dart';
-// import 'package:profile_ui/main.dart';
+import 'package:get/get.dart';
+import 'package:profile_ui/screen/register/controller/auth_controller.dart';
+import 'package:profile_ui/utils/constants/colors.dart';
+import 'package:profile_ui/utils/validators.dart';
+import 'package:profile_ui/widget/custom_button.dart';
+import 'package:profile_ui/widget/custom_input_field.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  // static const String routeName = '/signin';
+  const LoginScreen({super.key});
+  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(AuthController());
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 24),
           child: Form(
-            key: _formKey,
+            key: controller.formKey,
             child: Column(
               children: [
                 SizedBox(height: 20),
@@ -39,52 +43,42 @@ class LoginScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 12, letterSpacing: 1.5),
                 ),
                 SizedBox(height: 40),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: "Your email address",
-                    border: OutlineInputBorder(),
-                    hintText: "@domain.com",
-                  ),
-                  validator: (value) => value!.isEmpty || !value.contains('@')
-                      ? 'Email not correct'
-                      : null,
+                CustomInputField(
+                  hint: 'Email, Phone & Username',
+                  controller: controller.emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: Validators.validateEmail,
                 ),
                 SizedBox(height: 20),
-                TextFormField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter your password',
+                Obx(
+                  () => CustomInputField(
+                    hint: 'Password',
+                    controller: controller.passwordController,
+                    validator: Validators.validatePassword,
+                    obscure: controller.obscurePassword.value,
+                    onTap: controller.togglePassword,
+                    suffixIcon: Icon(
+                      controller.obscurePassword.value
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                    ),
                   ),
-                  validator: (value) =>
-                      value!.length < 8 ? 'Password not correct' : null,
                 ),
-                SizedBox(height: 20),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      final res = _formKey.currentState?.validate();
-                      if (res == true) {
-                        Navigator.of(
-                          context,
-                        ).push(MaterialPageRoute(builder: (_) => Dashboard()));
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey.shade50,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      elevation: 0,
-                    ),
-                    child: Text(
-                      "Continue",
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
-                    ),
-                  ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [Text('Forgot Password ?')],
+                ),
+                SizedBox(height: 30),
+                CustomButton(
+                  onPressed: () {
+                    if (controller.formKey.currentState?.validate() ?? false) {
+                      controller.login();
+                    }
+                  },
+                  text: 'Sign in',
+                  color: AppColors.primary,
+                  isLoading: controller.isLoading.value,
                 ),
                 SizedBox(height: 10),
                 Row(
@@ -92,18 +86,11 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     Text("Dont't have an account ? "),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignupScreen(),
-                          ),
-                        );
-                      },
+                      onTap: () => Get.toNamed('/signup'),
                       child: Text(
                         'Register Now',
                         style: TextStyle(
-                          color: Color(0xFF6B61FF),
+                          color: AppColors.primary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -116,7 +103,7 @@ class LoginScreen extends StatelessWidget {
                     Expanded(
                       child: Divider(
                         thickness: 1,
-                        color: Colors.black.withOpacity(0.05),
+                        color: AppColors.text.withOpacity(0.05),
                       ),
                     ),
                     SizedBox(width: 10),
@@ -125,7 +112,7 @@ class LoginScreen extends StatelessWidget {
                     Expanded(
                       child: Divider(
                         thickness: 1,
-                        color: Colors.black.withOpacity(0.05),
+                        color: AppColors.text.withOpacity(0.05),
                       ),
                     ),
                   ],
@@ -134,7 +121,7 @@ class LoginScreen extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black.withOpacity(0.15)),
+                    border: Border.all(color: AppColors.text.withOpacity(0.15)),
                     borderRadius: BorderRadius.circular(999),
                   ),
                   child: Row(
@@ -146,7 +133,7 @@ class LoginScreen extends StatelessWidget {
                         "Sign up with Google",
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.black,
+                          color: AppColors.text,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -157,7 +144,7 @@ class LoginScreen extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black.withOpacity(0.15)),
+                    border: Border.all(color: AppColors.text.withOpacity(0.15)),
                     borderRadius: BorderRadius.circular(999),
                   ),
                   child: Row(
@@ -169,7 +156,7 @@ class LoginScreen extends StatelessWidget {
                         "Sign up with Apple",
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.black,
+                          color: AppColors.text,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

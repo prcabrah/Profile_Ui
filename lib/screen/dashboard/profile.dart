@@ -1,13 +1,15 @@
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:profile_ui/utils/constants/colors.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({required this.email, super.key});
+  final String email;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -15,7 +17,7 @@ class ProfileScreen extends StatelessWidget {
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  Container(height: 180, color: Colors.blue[700]),
+                  Container(height: 180, color: AppColors.primary),
                   Positioned(
                     top: 100,
                     child: CircleAvatar(
@@ -39,8 +41,8 @@ class ProfileScreen extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                'Email: abrahametomu@yahoo.com',
-                style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                'Email: $email',
+                style: TextStyle(fontSize: 16, color: AppColors.grey[700]),
               ),
               SizedBox(height: 16),
               Padding(
@@ -56,24 +58,24 @@ class ProfileScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
-                    icon: FaIcon(FontAwesomeIcons.twitter, color: Colors.blue),
+                    icon: FaIcon(FontAwesomeIcons.twitter, color: AppColors.primary),
                     onPressed: () {},
                   ),
                   IconButton(
                     icon: FaIcon(
                       FontAwesomeIcons.linkedin,
-                      color: Colors.blue[800],
+                      color: AppColors.primary,
                     ),
                     onPressed: () {},
                   ),
                   IconButton(
-                    icon: FaIcon(FontAwesomeIcons.github, color: Colors.black),
+                    icon: FaIcon(FontAwesomeIcons.github, color: AppColors.text),
                     onPressed: () {},
                   ),
                   IconButton(
                     icon: FaIcon(
                       FontAwesomeIcons.instagram,
-                      color: Colors.purple,
+                      color: AppColors.purple,
                     ),
                     onPressed: () {},
                   ),

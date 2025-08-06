@@ -1,40 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:profile_ui/screen/dashboard/favourites.dart';
 import 'package:profile_ui/screen/dashboard/home.dart';
 import 'package:profile_ui/screen/dashboard/movies.dart';
 import 'package:profile_ui/screen/dashboard/profile.dart';
+import 'package:profile_ui/screen/home/controller/home_controller.dart';
+import 'package:profile_ui/utils/constants/colors.dart';
 
 class Dashboard extends StatelessWidget {
-  const Dashboard({super.key});
+  final String email;
+  const Dashboard({required this.email, super.key});
+
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        body: TabBarView(
-          children: [Home(), Movies(), Favourites(), ProfileScreen()],
-        ),
-        bottomNavigationBar: Container(
-          padding: EdgeInsets.symmetric(vertical: 14),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border(
-              top: BorderSide(color: Colors.black.withOpacity(0.05)),
+    final homeController = Get.put(HomeController());
+    final List<Widget> pages = [
+      Home(email: email),
+      Movies(),
+      Favourites(),
+      ProfileScreen(email: email),
+    ];
+
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(title: Text('My Movie App')),
+      body: Obx(() => pages[homeController.selectedIndex.value]),
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
+          backgroundColor: AppColors.text,
+          currentIndex: homeController.selectedIndex.value,
+          onTap: homeController.onTabSelected,
+          selectedItemColor: AppColors.primary,
+          unselectedItemColor: AppColors.grey,
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.movie), label: 'Movies'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.collections),
+              label: 'Favourite',
             ),
-          ),
-          child: TabBar(
-            labelColor: Colors.blue[700],
-            dividerColor: Colors.transparent,
-            indicatorColor: Colors.blue[700],
-            indicatorSize: TabBarIndicatorSize.tab,
-            tabs: [
-              Tab(text: "Home"),
-              Tab(text: "Movies"),
-              Tab(text: "Favourites"),
-              Tab(text: "Profile"),
-            ],
-          ),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          ],
         ),
       ),
     );

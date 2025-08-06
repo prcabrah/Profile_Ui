@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
-// import 'package:profile_ui/main.dart';
-import 'package:profile_ui/screen/auth/signup_screen.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:profile_ui/screen/register/view/register.dart';
+import 'package:profile_ui/utils/constants/colors.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
+  void _markWelcomeComplete() {
+    final storage = GetStorage();
+    storage.write('isFirstTime', false); 
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       body: Stack(
         children: [
           ClipPath(
             clipper: TopCurveClipper(),
             child: Container(
               height: MediaQuery.of(context).size.height * 0.5,
-              color: const Color(0xFF0D1B2A),
+              color: AppColors.text,
             ),
           ),
           Column(
@@ -24,18 +31,18 @@ class WelcomeScreen extends StatelessWidget {
               const Spacer(flex: 3),
               CircleAvatar(
                 radius: 40,
-                backgroundColor: Colors.white,
+                backgroundColor: AppColors.background,
                 child: Stack(
                   alignment: Alignment.center,
                   children: const [
-                    Icon(Icons.eco, size: 50, color: Colors.green),
+                    Icon(Icons.eco, size: 50, color: AppColors.green),
                     Positioned(
                       right: 0,
                       bottom: 0,
                       child: Icon(
                         Icons.eco,
                         size: 40,
-                        color: Color(0xFF0D1B2A),
+                        color: AppColors.text,
                       ),
                     ),
                   ],
@@ -50,20 +57,22 @@ class WelcomeScreen extends StatelessWidget {
               const Text(
                 "A platform built for a new way of working",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, color: Colors.black54),
+                style: TextStyle(fontSize: 16, color: AppColors.text),
               ),
               const SizedBox(height: 40),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 90.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignupScreen()),
-                    );
+                    _markWelcomeComplete(); // Mark the welcome as complete
+                    Get.offAll(() => const SignupScreen());
+                    // Navigator.pushReplacement(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => SignupScreen()),
+                    // );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.lightGreenAccent.shade400,
+                    backgroundColor: AppColors.green.shade400,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -71,7 +80,7 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   child: const Text(
                     "Get Started for Free",
-                    style: TextStyle(color: Colors.black87, fontSize: 16),
+                    style: TextStyle(color: AppColors.text, fontSize: 16),
                   ),
                 ),
               ),
