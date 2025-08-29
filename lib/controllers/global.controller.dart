@@ -15,3 +15,6 @@ class GlobalController extends GetxController {
     update();
   }
 }
+
+
+// 
