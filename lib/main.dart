@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:profile_ui/controllers/global.controller.dart';
 import 'package:profile_ui/screen/register/view/register.dart';
 import 'package:profile_ui/screen/dashboard/dashboard.dart';
 import 'package:profile_ui/screen/login/view/login.dart';
@@ -19,7 +20,8 @@ class MovieApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GetStorage box = GetStorage();
+    Get.put(GlobalController());
+
     return ScreenUtilInit(
       designSize: Size(375, 812),
       builder:
